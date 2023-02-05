@@ -1,0 +1,169 @@
+## Configuration
+
+=== "PE1"
+
+    ```java
+    interface Loopback0
+     ipv4 address 1.1.1.1 255.255.255.255
+    !
+    interface GigabitEthernet0/0/0/2
+     ipv4 address 12.0.0.1 255.255.255.0
+     no shutdown
+    ```
+
+=== "P2"
+
+    ```java
+    interface Loopback0
+     ipv4 address 2.2.2.2 255.255.255.255
+    !
+    interface GigabitEthernet0/0/0/0
+     ipv4 address 23.0.0.2 255.255.255.0
+     no shutdown
+    !
+    interface GigabitEthernet0/0/0/1
+     ipv4 address 26.0.0.2 255.255.255.0
+     no shutdown
+    !
+    interface GigabitEthernet0/0/0/2
+     ipv4 address 12.0.0.2 255.255.255.0
+     no shutdown
+    !
+    interface GigabitEthernet0/0/0/3
+     ipv4 address 27.0.0.2 255.255.255.0
+     no shutdown
+    !
+    ```
+
+
+=== "P3"
+    ```java
+    interface Loopback0
+     ipv4 address 3.3.3.3 255.255.255.255
+    !
+    interface GigabitEthernet0/0/0/0
+     ipv4 address 23.0.0.3 255.255.255.0
+     no shutdown
+    !
+    interface GigabitEthernet0/0/0/1
+     ipv4 address 37.0.0.3 255.255.255.0
+     no shutdown
+    !
+    interface GigabitEthernet0/0/0/2
+     ipv4 address 34.0.0.3 255.255.255.0
+     no shutdown
+    ```
+
+=== "P4"
+    ```java
+    interface Loopback0
+     ipv4 address 4.4.4.4 255.255.255.255
+    !
+    interface GigabitEthernet0/0/0/0
+     ipv4 address 45.0.0.4 255.255.255.0
+     no shutdown
+    !
+    interface GigabitEthernet0/0/0/1
+     ipv4 address 48.0.0.4 255.255.255.0
+     no shutdown
+    !
+    interface GigabitEthernet0/0/0/2
+     ipv4 address 34.0.0.4 255.255.255.0
+     no shutdown
+    !
+    interface GigabitEthernet0/0/0/4
+     ipv4 address 47.0.0.4 255.255.255.0
+     no shutdown
+    ```
+
+=== "PE5"
+    ```java
+    interface Loopback0
+     ipv4 address 5.5.5.5 255.255.255.255
+    !
+    interface GigabitEthernet0/0/0/0
+     ipv4 address 45.0.0.5 255.255.255.0
+     no shutdown
+    ```
+
+=== "P6"
+    ```java
+    interface Loopback0
+     ipv4 address 6.6.6.6 255.255.255.255
+    !
+    interface GigabitEthernet0/0/0/0
+     ipv4 address 67.0.0.6 255.255.255.0
+     no shutdown
+    !
+    interface GigabitEthernet0/0/0/1
+     ipv4 address 26.0.0.6 255.255.255.0
+     no shutdown
+    ```
+
+=== "P7"
+    ```java
+    interface Loopback0
+     ipv4 address 7.7.7.7 255.255.255.255
+    !
+    interface GigabitEthernet0/0/0/0
+     ipv4 address 67.0.0.7 255.255.255.0
+     no shutdown
+    !
+    interface GigabitEthernet0/0/0/1
+     ipv4 address 37.0.0.7 255.255.255.0
+     no shutdown
+    !
+    interface GigabitEthernet0/0/0/2
+     ipv4 address 78.0.0.7 255.255.255.0
+     no shutdown
+    !
+    interface GigabitEthernet0/0/0/3
+     ipv4 address 27.0.0.7 255.255.255.0
+     no shutdown
+    !
+    interface GigabitEthernet0/0/0/4
+     ipv4 address 47.0.0.7 255.255.255.0
+     no shutdown
+    ```
+
+=== "P8"
+    ```java
+    interface Loopback0
+     ipv4 address 8.8.8.8 255.255.255.255
+    !
+    interface GigabitEthernet0/0/0/1
+     ipv4 address 48.0.0.8 255.255.255.0
+     no shutdown
+    !
+    interface GigabitEthernet0/0/0/2
+     ipv4 address 78.0.0.8 255.255.255.0
+     no shutdown
+    ```
+
+## Verify
+=== "IP Address"
+    ```java
+    RP/0/RP0/CPU0:PE1#show ip int brief
+    Wed Feb  1 02:59:30.713 UTC
+    
+    Interface                      IP-Address      Status          Protocol Vrf-Name
+    Loopback0                      1.1.1.1         Up              Up       default
+    MgmtEth0/RP0/CPU0/0            192.168.18.1    Up              Up       default
+    GigabitEthernet0/0/0/0         unassigned      Shutdown        Down     default
+    GigabitEthernet0/0/0/1         unassigned      Shutdown        Down     default
+    GigabitEthernet0/0/0/2         12.0.0.1        Up              Up       default
+    GigabitEthernet0/0/0/3         unassigned      Shutdown        Down     default
+    GigabitEthernet0/0/0/4         unassigned      Shutdown        Down     default
+    GigabitEthernet0/0/0/5         unassigned      Shutdown        Down     default
+    GigabitEthernet0/0/0/6         unassigned      Shutdown        Down     default
+    GigabitEthernet0/0/0/7         unassigned      Shutdown        Down     default
+    RP/0/RP0/CPU0:PE1#
+    
+    RP/0/RP0/CPU0:PE1#ping 12.0.0.2
+    Wed Feb  1 03:02:30.713 UTC
+    Type escape sequence to abort.
+    Sending 5, 100-byte ICMP Echos to 12.0.0.2, timeout is 2 seconds:
+    !!!!!
+    Success rate is 100 percent (5/5), round-trip min/avg/max = 3/6/15 ms
+    RP/0/RP0/CPU0:PE1#
+    ```

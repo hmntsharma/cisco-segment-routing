@@ -1,0 +1,90 @@
+---
+site_name: Cisco XRv9k Segment Routing
+site_description: A brief look at Segment Rotuing and TI-LFA on Cisco XRv9k 
+site_author: Hemant Sharma
+site_url: https://hmntsharma.github.io/cisco-segment-routing
+
+repo_url: https://github.com/hmntsharma/cisco-segment-routing
+repo_name: hmntsharma/cisco-segment-routing
+edit_uri: ""
+
+theme:
+  name: material
+
+  palette: 
+    - primary: white
+      accent: red
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - primary: black
+      accent: red
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+  icon:
+    logo: material/router
+    repo: fontawesome/brands/git-alt
+
+  favicon: material/router
+
+  features:
+    - content.code.copy
+    - content.code.annotate
+    - navigation.instant
+    - navigation.sections
+    - navigation.top
+    - toc.follow
+    - toc.integrate
+
+markdown_extensions:
+  - tables
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - attr_list
+  - md_in_html
+  - abbr
+  - pymdownx.snippets
+  - footnotes
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.smartsymbols
+
+nav:
+  - Introduction : index.md
+  - Getting Started:
+    -  IP Address: ip_add.md
+    -  Routing (ISIS): isis.md
+    -  MPLS (LDP): ldp.md
+  - Segment Routing: sr_intro.md
+  - SR - LDP Interworking: sr_ldp_inter.md
+  - TI-LFA: tilfa.md
+  - TI-LFA Scenarios:
+    -  Zero Segment TI-LFA: zs_tilfa.md
+    -  Single Segment TI-LFA: ss_tilfa.md
+    -  Double Segment TI-LFA: ds_tilfa.md
+  - Microloop Avoidance: micro_loop_avoidance.md
+  - MPLS Traffic-Eng: mpls_traffic_eng.md
+  - TI-LFA (Node and SRLG Protection):
+    -  Preparation: tilfa_node_srlg_prep.md
+    -  Node Protection: tilfa_node.md
+    -  Local SRLG-Disjoint Protection: tilfa_local_srlg.md
+    -  Global Weighted SRLG Protection: tilfa_gw_srlg.md
+    -  Node + SRLG Protection: tilfa_node_srlg.md
+  - TI-LFA Tiebreaker (Link vs Node vs SRLG): tilfa_link_node_srlg.md
+

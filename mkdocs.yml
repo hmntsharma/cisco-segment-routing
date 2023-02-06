@@ -35,12 +35,13 @@ theme:
 
   features:
     - content.code.copy
-    - content.code.annotate
+    - content.code.annotate    
+    - navigation.tabs
     - navigation.instant
-    - navigation.sections
+    - navigation.tracking
+    - navigation.expand
     - navigation.top
-    - toc.follow
-    - toc.integrate
+    - toc.integrate 
 
 markdown_extensions:
   - tables

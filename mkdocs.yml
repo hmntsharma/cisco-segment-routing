@@ -10,19 +10,61 @@ edit_uri: ""
 
 theme:
   name: material
-  palette:
-    primary: black
-    accent: red
+
+  palette: 
+    - primary: white
+      accent: red
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - primary: black
+      accent: red
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
+
   icon:
     logo: material/router
     repo: fontawesome/brands/git-alt
+
+  favicon: material/router
+
   features:
-    - navigation.tabs
+    - content.code.copy
+    - content.code.annotate
     - navigation.instant
-    - navigation.tracking
-    - navigation.expand
+    - navigation.sections
     - navigation.top
-    - toc.integrate 
+    - toc.follow
+    - toc.integrate
+
+markdown_extensions:
+  - tables
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - attr_list
+  - md_in_html
+  - abbr
+  - pymdownx.snippets
+  - footnotes
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.smartsymbols
+
 
 nav:
   - Introduction : index.md

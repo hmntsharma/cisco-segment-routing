@@ -66,6 +66,9 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.smartsymbols
 
+extra_css:
+  - stylesheets/extra.css
+
 
 nav:
   - Introduction : index.md

@@ -3,5 +3,7 @@
 </p>
 
 ---
+
 <h3 align="center">Implementing Segment Routing with TI-LFA on Cisco XRv9k platform</h3>
-[Documentation](https://hmntsharma.github.io/cisco-segment-routing/)
+
+<a align="center" href="https://hmntsharma.github.io/cisco-segment-routing/">Documentation</a>

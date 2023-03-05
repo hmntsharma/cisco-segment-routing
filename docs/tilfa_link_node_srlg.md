@@ -310,7 +310,7 @@ Increase the SRLG index to make node-protection the preferable option.
     ```
 <figure markdown>
   ![tiebreaker_srlg_prefer.png](assets/images/tiebreaker_srlg_prefer.png){ loading=lazy }
-  <figcaption>TI-LFA SRLG Protection Path Preferred</figcaption>
+  <figcaption>TI-LFA NODE Protection Path Preferred</figcaption>
 </figure>
 
 

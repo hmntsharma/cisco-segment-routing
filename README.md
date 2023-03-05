@@ -1,5 +1,7 @@
-# Cisco XRv9k Segment Routing with TI-LFA
+<p align="center">
+    <img width="800" src="https://github.com/hmntsharma/cisco-segment-routing/blob/main/docs/assets/images/heading.png?raw=true" alt="Material Bread logo">
+</p>
 
-Implementing Segment Routing with TI-LFA on Cisco XRv9k platform
-
+---
+<h3 align="center">Implementing Segment Routing with TI-LFA on Cisco XRv9k platform</h3>
 [Documentation](https://hmntsharma.github.io/cisco-segment-routing/)

@@ -6,4 +6,4 @@
 
 <h3 align="center">Implementing Segment Routing with TI-LFA on Cisco XRv9k platform</h3>
 
-<a align="center" href="https://hmntsharma.github.io/cisco-segment-routing/">Documentation</a>
+<a align="center" href="https://hmntsharma.github.io/cisco-segment-routing/">Lab Guide</a>

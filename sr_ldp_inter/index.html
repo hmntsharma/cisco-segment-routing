@@ -1,0 +1,1132 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A brief look at Segment Rotuing and TI-LFA on Cisco XRv9k">
+      
+      
+        <meta name="author" content="Hemant Sharma">
+      
+      
+        <link rel="canonical" href="https://hmntsharma.github.io/cisco-segment-routing/sr_ldp_inter/">
+      
+      
+        <link rel="prev" href="../sr_intro/">
+      
+      
+        <link rel="next" href="../tilfa/">
+      
+      <link rel="icon" href="../material/router">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.3">
+    
+    
+      
+        <title>SR - LDP Interworking - Cisco XRv9k Segment Routing</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.c4a75a56.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="red">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sr-ldp-interworking" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Cisco XRv9k Segment Routing" class="md-header__button md-logo" aria-label="Cisco XRv9k Segment Routing" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8m1-7v3h2l-3 3-3-3h2v-3m-6 0h3v2l3-3-3-3v2H5m6 0V8H9l3-3 3 3h-2v3m6 0h-3V9l-3 3 3 3v-2h3"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Cisco XRv9k Segment Routing
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              SR - LDP Interworking
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="red"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg>
+            </label>
+          
+        
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="red"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/hmntsharma/cisco-segment-routing" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hmntsharma/cisco-segment-routing
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Cisco XRv9k Segment Routing" class="md-nav__button md-logo" aria-label="Cisco XRv9k Segment Routing" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2m0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8m1-7v3h2l-3 3-3-3h2v-3m-6 0h3v2l3-3-3-3v2H5m6 0V8H9l3-3 3 3h-2v3m6 0h-3V9l-3 3 3 3v-2h3"/></svg>
+
+    </a>
+    Cisco XRv9k Segment Routing
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hmntsharma/cisco-segment-routing" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hmntsharma/cisco-segment-routing
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          Getting Started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Getting Started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ip_add/" class="md-nav__link">
+        IP Address
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../isis/" class="md-nav__link">
+        Routing (ISIS)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ldp/" class="md-nav__link">
+        MPLS (LDP)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sr_intro/" class="md-nav__link">
+        Segment Routing
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          SR - LDP Interworking
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        SR - LDP Interworking
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sr-ldp-domains" class="md-nav__link">
+    SR &amp; LDP Domains
+  </a>
+  
+    <nav class="md-nav" aria-label="SR &amp; LDP Domains">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#verify" class="md-nav__link">
+    Verify
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stitch-ldp-to-sr" class="md-nav__link">
+    Stitch LDP to SR
+  </a>
+  
+    <nav class="md-nav" aria-label="Stitch LDP to SR">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#verify_1" class="md-nav__link">
+    Verify
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stitch-sr-to-ldp-with-srms" class="md-nav__link">
+    Stitch SR to LDP (with SRMS)
+  </a>
+  
+    <nav class="md-nav" aria-label="Stitch SR to LDP (with SRMS)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#verify_2" class="md-nav__link">
+    Verify
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sr-only-domain" class="md-nav__link">
+    SR-Only Domain
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tilfa/" class="md-nav__link">
+        TI-LFA
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          TI-LFA Scenarios
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          TI-LFA Scenarios
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zs_tilfa/" class="md-nav__link">
+        Zero Segment TI-LFA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ss_tilfa/" class="md-nav__link">
+        Single Segment TI-LFA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ds_tilfa/" class="md-nav__link">
+        Double Segment TI-LFA
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../micro_loop_avoidance/" class="md-nav__link">
+        Microloop Avoidance
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mpls_traffic_eng/" class="md-nav__link">
+        MPLS Traffic-Eng
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+          TI-LFA (Node and SRLG Protection)
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          TI-LFA (Node and SRLG Protection)
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tilfa_node_srlg_prep/" class="md-nav__link">
+        TI-LFA Topology
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tilfa_node/" class="md-nav__link">
+        Node Protection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tilfa_local_srlg/" class="md-nav__link">
+        Local SRLG-Disjoint Protection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tilfa_gw_srlg/" class="md-nav__link">
+        Global Weighted SRLG Protection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tilfa_node_srlg/" class="md-nav__link">
+        Node + SRLG Protection
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tilfa_link_node_srlg/" class="md-nav__link">
+        TI-LFA Tiebreaker (Link vs Node vs SRLG)
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="sr-ldp-interworking">SR - LDP Interworking</h1>
+<figure>
+<p><img alt="sr_ldp_interworking.png" loading="lazy" src="../assets/images/sr_ldp_interworking.png" />
+  </p>
+<figcaption>SR - LDP Interworking</figcaption>
+</figure>
+<p>As we've shown in earlier sections, SR and LDP can coexist. With sr-prefer enabled, if an SR labelled path exists, use it; otherwise, use an LDP labelled path for a specific destination.</p>
+<p>The next step is to transition traffic between SR-only and LDP-only domains.</p>
+<h2 id="sr-ldp-domains">SR &amp; LDP Domains</h2>
+<p>Except for the border routers, P3 and P7, remove LDP from the left part of the topology.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">PE1</label><label for="__tabbed_1_2">P2</label><label for="__tabbed_1_3">P6</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">router</span><span class="w"> </span><span class="n">isis</span><span class="w"> </span><span class="n">IGP</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w"> </span><span class="n">address</span><span class="o">-</span><span class="n">family</span><span class="w"> </span><span class="n">ipv4</span><span class="w"> </span><span class="n">unicast</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="n">no</span><span class="w"> </span><span class="n">mpls</span><span class="w"> </span><span class="n">ldp</span><span class="w"> </span><span class="n">auto</span><span class="o">-</span><span class="n">config</span><span class="w"> </span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">router</span><span class="w"> </span><span class="n">isis</span><span class="w"> </span><span class="n">IGP</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w"> </span><span class="n">address</span><span class="o">-</span><span class="n">family</span><span class="w"> </span><span class="n">ipv4</span><span class="w"> </span><span class="n">unicast</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="n">no</span><span class="w"> </span><span class="n">mpls</span><span class="w"> </span><span class="n">ldp</span><span class="w"> </span><span class="n">auto</span><span class="o">-</span><span class="n">config</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">router</span><span class="w"> </span><span class="n">isis</span><span class="w"> </span><span class="n">IGP</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w"> </span><span class="n">address</span><span class="o">-</span><span class="n">family</span><span class="w"> </span><span class="n">ipv4</span><span class="w"> </span><span class="n">unicast</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="n">no</span><span class="w"> </span><span class="n">mpls</span><span class="w"> </span><span class="n">ldp</span><span class="w"> </span><span class="n">auto</span><span class="o">-</span><span class="n">config</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<h3 id="verify">Verify</h3>
+<div class="admonition failure">
+<p class="admonition-title">Failure</p>
+<p>Because there is no end-to-end LDP, a traceroute from PE1 to PE5 would no longer operate. Label stitching is required to switch the traffic between the two domains.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">RP</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="n">RP0</span><span class="o">/</span><span class="n">CPU0</span><span class="p">:</span><span class="n">PE1</span><span class="err">#</span><span class="n">traceroute</span><span class="w"> </span><span class="n">mpls</span><span class="w"> </span><span class="n">ipv4</span><span class="w"> </span><span class="mf">5.5.5.5</span><span class="o">/</span><span class="mi">32</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">Wed</span><span class="w"> </span><span class="n">Feb</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="mo">06</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mf">47.515</span><span class="w"> </span><span class="n">UTC</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">Tracing</span><span class="w"> </span><span class="n">MPLS</span><span class="w"> </span><span class="n">Label</span><span class="w"> </span><span class="n">Switched</span><span class="w"> </span><span class="n">Path</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="mf">5.5.5.5</span><span class="o">/</span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="n">timeout</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">seconds</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="nl">Codes</span><span class="p">:</span><span class="w"> </span><span class="sc">&#39;!&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">success</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;Q&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">sent</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;.&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">timeout</span><span class="p">,</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span><span class="sc">&#39;L&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">labeled</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="kd">interface</span><span class="err">,</span> <span class="err">&#39;</span><span class="nc">B</span><span class="err">&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">unlabeled</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="kd">interface</span><span class="err">,</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>  <span class="err">&#39;</span><span class="nc">D</span><span class="err">&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">DS</span><span class="w"> </span><span class="n">Map</span><span class="w"> </span><span class="n">mismatch</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;F&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">FEC</span><span class="w"> </span><span class="n">mapping</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;f&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">FEC</span><span class="w"> </span><span class="n">mismatch</span><span class="p">,</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">  </span><span class="sc">&#39;M&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">malformed</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;m&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">unsupported</span><span class="w"> </span><span class="n">tlvs</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;N&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">rx</span><span class="w"> </span><span class="n">label</span><span class="p">,</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">  </span><span class="sc">&#39;P&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">rx</span><span class="w"> </span><span class="n">intf</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="n">prot</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;p&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">premature</span><span class="w"> </span><span class="n">termination</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">LSP</span><span class="p">,</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">  </span><span class="sc">&#39;R&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">transit</span><span class="w"> </span><span class="n">router</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;I&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">unknown</span><span class="w"> </span><span class="n">upstream</span><span class="w"> </span><span class="n">index</span><span class="p">,</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">  </span><span class="sc">&#39;X&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">unknown</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">code</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;x&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="mi">0</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="n">Type</span><span class="w"> </span><span class="n">escape</span><span class="w"> </span><span class="n">sequence</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">abort</span><span class="p">.</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="mf">0.0.0.0</span><span class="w"> </span><span class="n">MRU</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">[</span><span class="n">No</span><span class="w"> </span><span class="n">Label</span><span class="o">]</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="n">Q</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">*</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="n">RP</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="n">RP0</span><span class="o">/</span><span class="n">CPU0</span><span class="p">:</span><span class="n">PE1</span><span class="err">#</span>
+</code></pre></div>
+<h2 id="stitch-ldp-to-sr">Stitch LDP to SR</h2>
+<div class="admonition tip">
+<p class="admonition-title">LDP to SR label swap</p>
+<p>This aspect is straightforward with the Cisco IOS-XR architecture, and the border router between the two domains handles it automatically.</p>
+</div>
+<p>LDP labels are used for traffic coming from the LDP domain since LDP creates a label for each route in the routing table. The border router utilises the SR label to forward traffic in the SR domain.</p>
+<h3 id="verify_1">Verify</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">LRP</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="n">RP0</span><span class="o">/</span><span class="n">CPU0</span><span class="p">:</span><span class="n">PE5</span><span class="err">#</span><span class="n">traceroute</span><span class="w"> </span><span class="n">mpls</span><span class="w"> </span><span class="n">ipv4</span><span class="w"> </span><span class="mf">1.1.1.1</span><span class="o">/</span><span class="mi">32</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">Wed</span><span class="w"> </span><span class="n">Feb</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="mo">06</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mf">47.175</span><span class="w"> </span><span class="n">UTC</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">Tracing</span><span class="w"> </span><span class="n">MPLS</span><span class="w"> </span><span class="n">Label</span><span class="w"> </span><span class="n">Switched</span><span class="w"> </span><span class="n">Path</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="mf">1.1.1.1</span><span class="o">/</span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="n">timeout</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">seconds</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="nl">Codes</span><span class="p">:</span><span class="w"> </span><span class="sc">&#39;!&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">success</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;Q&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">sent</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;.&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">timeout</span><span class="p">,</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">  </span><span class="sc">&#39;L&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">labeled</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="kd">interface</span><span class="err">,</span> <span class="err">&#39;</span><span class="nc">B</span><span class="err">&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">unlabeled</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="kd">interface</span><span class="err">,</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>  <span class="err">&#39;</span><span class="nc">D</span><span class="err">&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">DS</span><span class="w"> </span><span class="n">Map</span><span class="w"> </span><span class="n">mismatch</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;F&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">FEC</span><span class="w"> </span><span class="n">mapping</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;f&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">FEC</span><span class="w"> </span><span class="n">mismatch</span><span class="p">,</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">  </span><span class="sc">&#39;M&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">malformed</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;m&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">unsupported</span><span class="w"> </span><span class="n">tlvs</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;N&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">rx</span><span class="w"> </span><span class="n">label</span><span class="p">,</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">  </span><span class="sc">&#39;P&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">rx</span><span class="w"> </span><span class="n">intf</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="n">prot</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;p&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">premature</span><span class="w"> </span><span class="n">termination</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">LSP</span><span class="p">,</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">  </span><span class="sc">&#39;R&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">transit</span><span class="w"> </span><span class="n">router</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;I&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">unknown</span><span class="w"> </span><span class="n">upstream</span><span class="w"> </span><span class="n">index</span><span class="p">,</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">  </span><span class="sc">&#39;X&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">unknown</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">code</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;x&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="mi">0</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="n">Type</span><span class="w"> </span><span class="n">escape</span><span class="w"> </span><span class="n">sequence</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">abort</span><span class="p">.</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="mf">45.0.0.5</span><span class="w"> </span><span class="n">MRU</span><span class="w"> </span><span class="mi">1500</span><span class="w"> </span><span class="o">[</span><span class="n">Labels</span><span class="p">:</span><span class="w"> </span><span class="mi">24013</span><span class="w"> </span><span class="n">Exp</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="o">]</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="n">L</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mf">45.0.0.4</span><span class="w"> </span><span class="n">MRU</span><span class="w"> </span><span class="mi">1500</span><span class="w"> </span><span class="o">[</span><span class="n">Labels</span><span class="p">:</span><span class="w"> </span><span class="mi">24014</span><span class="w"> </span><span class="n">Exp</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="o">]</span><span class="w"> </span><span class="mi">17</span><span class="w"> </span><span class="n">ms</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="n">L</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mf">34.0.0.3</span><span class="w"> </span><span class="n">MRU</span><span class="w"> </span><span class="mi">1500</span><span class="w"> </span><span class="o">[</span><span class="n">Labels</span><span class="p">:</span><span class="w"> </span><span class="mi">16001</span><span class="w"> </span><span class="n">Exp</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="o">]</span><span class="w"> </span><span class="mi">13</span><span class="w"> </span><span class="n">ms</span><span class="w"> </span><span class="c1">// (1)</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="n">L</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mf">23.0.0.2</span><span class="w"> </span><span class="n">MRU</span><span class="w"> </span><span class="mi">1500</span><span class="w"> </span><span class="o">[</span><span class="n">Labels</span><span class="p">:</span><span class="w"> </span><span class="n">implicit</span><span class="o">-</span><span class="kc">null</span><span class="w"> </span><span class="n">Exp</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="o">]</span><span class="w"> </span><span class="mi">13</span><span class="w"> </span><span class="n">ms</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="o">!</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mf">12.0.0.1</span><span class="w"> </span><span class="mi">37</span><span class="w"> </span><span class="n">ms</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="n">RP</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="n">RP0</span><span class="o">/</span><span class="n">CPU0</span><span class="p">:</span><span class="n">PE5</span><span class="err">#</span>
+</code></pre></div>
+<ol>
+<li>LDP Label 24014 stitched to SR Label 16001</li>
+</ol>
+<p>P4 routed traffic via the LDP label to P3, which delivered it via the SR label across the SR domain.</p>
+<p>To route traffic to PE1, P3 swaps an incoming LDP label with an outgoing SR label 16001.</p>
+<p>Let's take a look at the label forwarding table and the cef entry on P3.</p>
+<p>P3 is utilising SR labels to route traffic for prefix 1.1.1.1/32; traffic arriving with SR labels as well as LDP labels now has an SR outgoing label.
+P3 copied the SR label for 1.1.1.1/32 to the unlabeled LDP outgoing label.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">RP</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="n">RP0</span><span class="o">/</span><span class="n">CPU0</span><span class="p">:</span><span class="n">P3</span><span class="err">#</span><span class="n">show</span><span class="w"> </span><span class="n">cef</span><span class="w"> </span><span class="mf">1.1.1.1</span><span class="o">/</span><span class="mi">32</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">Wed</span><span class="w"> </span><span class="n">Feb</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="mo">06</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mf">10.431</span><span class="w"> </span><span class="n">UTC</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="mf">1.1.1.1</span><span class="o">/</span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="mi">144</span><span class="p">,</span><span class="w"> </span><span class="n">labeled</span><span class="w"> </span><span class="n">SR</span><span class="p">,</span><span class="w"> </span><span class="n">internal</span><span class="w"> </span><span class="mh">0x1000001</span><span class="w"> </span><span class="mh">0x8310</span><span class="w"> </span><span class="p">(</span><span class="n">ptr</span><span class="w"> </span><span class="mh">0xe6a41e0</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="mh">0x600</span><span class="w"> </span><span class="p">(</span><span class="mh">0xd944f08</span><span class="p">),</span><span class="w"> </span><span class="mh">0xa28</span><span class="w"> </span><span class="p">(</span><span class="mh">0xeb60968</span><span class="p">)</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w"> </span><span class="n">Updated</span><span class="w"> </span><span class="n">Feb</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="mo">06</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="mf">11.114</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w"> </span><span class="n">remote</span><span class="w"> </span><span class="n">adjacency</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w"> </span><span class="n">Prefix</span><span class="w"> </span><span class="n">Len</span><span class="w"> </span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="n">traffic</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">precedence</span><span class="w"> </span><span class="n">n</span><span class="o">/</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">priority</span><span class="w"> </span><span class="mi">1</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">  </span><span class="n">gateway</span><span class="w"> </span><span class="nf">array</span><span class="w"> </span><span class="p">(</span><span class="mh">0xd7ad8d8</span><span class="p">)</span><span class="w"> </span><span class="n">reference</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">flags</span><span class="w"> </span><span class="mh">0x68</span><span class="p">,</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="nf">rib</span><span class="w"> </span><span class="p">(</span><span class="mi">7</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">backups</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">                </span><span class="o">[</span><span class="mi">2</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="n">flags</span><span class="w"> </span><span class="mh">0x8401</span><span class="w"> </span><span class="p">(</span><span class="mh">0xebae128</span><span class="p">)</span><span class="w"> </span><span class="n">ext</span><span class="w"> </span><span class="mh">0x0</span><span class="w"> </span><span class="p">(</span><span class="mh">0x0</span><span class="p">)</span><span class="o">]</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">  </span><span class="n">LW</span><span class="o">-</span><span class="n">LDI</span><span class="o">[</span><span class="n">type</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">refc</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">ptr</span><span class="o">=</span><span class="mh">0xd944f08</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="o">-</span><span class="n">ldi</span><span class="o">=</span><span class="mh">0xebae128</span><span class="o">]</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">  </span><span class="n">gateway</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">update</span><span class="w"> </span><span class="n">type</span><span class="o">-</span><span class="n">time</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">Feb</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="mo">06</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="mf">11.115</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w"> </span><span class="n">LDI</span><span class="w"> </span><span class="n">Update</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="n">Feb</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="mo">06</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="mf">11.115</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w"> </span><span class="n">LW</span><span class="o">-</span><span class="n">LDI</span><span class="o">-</span><span class="n">TS</span><span class="w"> </span><span class="n">Feb</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="mo">06</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="mf">11.115</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">   </span><span class="n">via</span><span class="w"> </span><span class="mf">23.0.0.2</span><span class="o">/</span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="w"> </span><span class="n">dependencies</span><span class="p">,</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="kd">class</span> <span class="err">0</span> <span class="err">[</span><span class="nc">flags</span><span class="w"> </span><span class="mh">0x0</span><span class="o">]</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">    </span><span class="n">path</span><span class="o">-</span><span class="n">idx</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">NHID</span><span class="w"> </span><span class="mh">0x0</span><span class="w"> </span><span class="o">[</span><span class="mh">0xf399a10</span><span class="w"> </span><span class="mh">0x0</span><span class="o">]</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">    </span><span class="n">next</span><span class="w"> </span><span class="n">hop</span><span class="w"> </span><span class="mf">23.0.0.2</span><span class="o">/</span><span class="mi">32</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">    </span><span class="n">remote</span><span class="w"> </span><span class="n">adjacency</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">     </span><span class="n">local</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="mi">16001</span><span class="w">      </span><span class="n">labels</span><span class="w"> </span><span class="n">imposed</span><span class="w"> </span><span class="p">{</span><span class="mi">16001</span><span class="p">}</span><span class="w"> </span><span class="c1">// (1)</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">    </span><span class="n">Load</span><span class="w"> </span><span class="n">distribution</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">(</span><span class="n">refcount</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">    </span><span class="n">Hash</span><span class="w">  </span><span class="n">OK</span><span class="w">  </span><span class="n">Interface</span><span class="w">                 </span><span class="n">Address</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="w">    </span><span class="mi">0</span><span class="w">     </span><span class="n">Y</span><span class="w">   </span><span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="w">    </span><span class="n">remote</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="n">RP</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="n">RP0</span><span class="o">/</span><span class="n">CPU0</span><span class="p">:</span><span class="n">P3</span><span class="err">#</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="n">RP</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="n">RP0</span><span class="o">/</span><span class="n">CPU0</span><span class="p">:</span><span class="n">P3</span><span class="err">#</span><span class="n">show</span><span class="w"> </span><span class="n">mpls</span><span class="w">  </span><span class="n">forwarding</span><span class="w"> </span><span class="n">prefix</span><span class="w"> </span><span class="mf">1.1.1.1</span><span class="o">/</span><span class="mi">32</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="n">Wed</span><span class="w"> </span><span class="n">Feb</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="mo">06</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mf">12.950</span><span class="w"> </span><span class="n">UTC</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="n">Local</span><span class="w">  </span><span class="n">Outgoing</span><span class="w">    </span><span class="n">Prefix</span><span class="w">             </span><span class="n">Outgoing</span><span class="w">     </span><span class="n">Next</span><span class="w"> </span><span class="n">Hop</span><span class="w">        </span><span class="n">Bytes</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="n">Label</span><span class="w">  </span><span class="n">Label</span><span class="w">       </span><span class="n">or</span><span class="w"> </span><span class="n">ID</span><span class="w">              </span><span class="n">Interface</span><span class="w">                    </span><span class="n">Switched</span>
+<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a><span class="o">------</span><span class="w"> </span><span class="o">-----------</span><span class="w"> </span><span class="o">------------------</span><span class="w"> </span><span class="o">------------</span><span class="w"> </span><span class="o">---------------</span><span class="w"> </span><span class="o">------------</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a><span class="mi">16001</span><span class="w">  </span><span class="mi">16001</span><span class="w">       </span><span class="n">SR</span><span class="w"> </span><span class="nf">Pfx</span><span class="w"> </span><span class="p">(</span><span class="n">idx</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">     </span><span class="n">Gi0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="w">    </span><span class="mf">23.0.0.2</span><span class="w">        </span><span class="mi">0</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="n">RP</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="n">RP0</span><span class="o">/</span><span class="n">CPU0</span><span class="p">:</span><span class="n">P3</span><span class="err">#</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a>
+<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a><span class="n">RP</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="n">RP0</span><span class="o">/</span><span class="n">CPU0</span><span class="p">:</span><span class="n">P3</span><span class="err">#</span><span class="n">show</span><span class="w"> </span><span class="n">mpls</span><span class="w"> </span><span class="n">ldp</span><span class="w"> </span><span class="n">forwarding</span><span class="w"> </span><span class="mf">1.1.1.1</span><span class="o">/</span><span class="mi">32</span>
+<a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a><span class="n">Wed</span><span class="w"> </span><span class="n">Feb</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="mo">06</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mf">14.431</span><span class="w"> </span><span class="n">UTC</span>
+<a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a>
+<a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a><span class="nl">Codes</span><span class="p">:</span>
+<a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a><span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GR</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="n">recovering</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LFA</span><span class="w"> </span><span class="n">FRR</span><span class="w"> </span><span class="n">pure</span><span class="w"> </span><span class="n">backup</span><span class="w"> </span><span class="n">path</span>
+<a id="__codelineno-5-38" name="__codelineno-5-38" href="#__codelineno-5-38"></a><span class="w">  </span><span class="p">{}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Label</span><span class="w"> </span><span class="n">stack</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">multi</span><span class="o">-</span><span class="n">line</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">routing</span><span class="w"> </span><span class="n">path</span>
+<a id="__codelineno-5-39" name="__codelineno-5-39" href="#__codelineno-5-39"></a><span class="w">  </span><span class="n">G</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">GR</span><span class="p">,</span><span class="w"> </span><span class="n">S</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Stale</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Remote</span><span class="w"> </span><span class="n">LFA</span><span class="w"> </span><span class="n">FRR</span><span class="w"> </span><span class="n">backup</span>
+<a id="__codelineno-5-40" name="__codelineno-5-40" href="#__codelineno-5-40"></a><span class="w">  </span><span class="n">E</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Entropy</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="n">capability</span>
+<a id="__codelineno-5-41" name="__codelineno-5-41" href="#__codelineno-5-41"></a>
+<a id="__codelineno-5-42" name="__codelineno-5-42" href="#__codelineno-5-42"></a><span class="n">Prefix</span><span class="w">          </span><span class="n">Label</span><span class="w">   </span><span class="nf">Label</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w">       </span><span class="n">Outgoing</span><span class="w">     </span><span class="n">Next</span><span class="w"> </span><span class="n">Hop</span><span class="w">            </span><span class="n">Flags</span>
+<a id="__codelineno-5-43" name="__codelineno-5-43" href="#__codelineno-5-43"></a><span class="w">                </span><span class="n">In</span><span class="w">      </span><span class="n">Out</span><span class="w">            </span><span class="n">Interface</span><span class="w">                        </span><span class="n">G</span><span class="w"> </span><span class="n">S</span><span class="w"> </span><span class="n">R</span><span class="w"> </span><span class="n">E</span>
+<a id="__codelineno-5-44" name="__codelineno-5-44" href="#__codelineno-5-44"></a><span class="o">---------------</span><span class="w"> </span><span class="o">-------</span><span class="w"> </span><span class="o">--------------</span><span class="w"> </span><span class="o">------------</span><span class="w"> </span><span class="o">-------------------</span><span class="w"> </span><span class="o">-------</span>
+<a id="__codelineno-5-45" name="__codelineno-5-45" href="#__codelineno-5-45"></a><span class="mf">1.1.1.1</span><span class="o">/</span><span class="mi">32</span><span class="w">      </span><span class="mi">24014</span><span class="w">   </span><span class="n">Unlabelled</span><span class="w">     </span><span class="n">Gi0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="w">    </span><span class="mf">23.0.0.2</span><span class="w">  </span><span class="c1">// (2)</span>
+<a id="__codelineno-5-46" name="__codelineno-5-46" href="#__codelineno-5-46"></a><span class="w">                        </span><span class="n">Unlabelled</span><span class="w">     </span><span class="n">Gi0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span><span class="w">    </span><span class="mf">37.0.0.7</span><span class="w">        </span><span class="p">(</span><span class="o">!</span><span class="p">)</span>
+<a id="__codelineno-5-47" name="__codelineno-5-47" href="#__codelineno-5-47"></a>
+<a id="__codelineno-5-48" name="__codelineno-5-48" href="#__codelineno-5-48"></a><span class="n">RP</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="n">RP0</span><span class="o">/</span><span class="n">CPU0</span><span class="p">:</span><span class="n">P3</span><span class="err">#</span>
+<a id="__codelineno-5-49" name="__codelineno-5-49" href="#__codelineno-5-49"></a>
+<a id="__codelineno-5-50" name="__codelineno-5-50" href="#__codelineno-5-50"></a><span class="n">RP</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="n">RP0</span><span class="o">/</span><span class="n">CPU0</span><span class="p">:</span><span class="n">P3</span><span class="err">#</span><span class="n">show</span><span class="w"> </span><span class="n">mpls</span><span class="w"> </span><span class="n">forwarding</span><span class="w"> </span><span class="n">labels</span><span class="w"> </span><span class="mi">24014</span>
+<a id="__codelineno-5-51" name="__codelineno-5-51" href="#__codelineno-5-51"></a><span class="n">Wed</span><span class="w"> </span><span class="n">Feb</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="mo">06</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mf">17.188</span><span class="w"> </span><span class="n">UTC</span>
+<a id="__codelineno-5-52" name="__codelineno-5-52" href="#__codelineno-5-52"></a><span class="n">Local</span><span class="w">  </span><span class="n">Outgoing</span><span class="w">    </span><span class="n">Prefix</span><span class="w">             </span><span class="n">Outgoing</span><span class="w">     </span><span class="n">Next</span><span class="w"> </span><span class="n">Hop</span><span class="w">        </span><span class="n">Bytes</span>
+<a id="__codelineno-5-53" name="__codelineno-5-53" href="#__codelineno-5-53"></a><span class="n">Label</span><span class="w">  </span><span class="n">Label</span><span class="w">       </span><span class="n">or</span><span class="w"> </span><span class="n">ID</span><span class="w">              </span><span class="n">Interface</span><span class="w">                    </span><span class="n">Switched</span>
+<a id="__codelineno-5-54" name="__codelineno-5-54" href="#__codelineno-5-54"></a><span class="o">------</span><span class="w"> </span><span class="o">-----------</span><span class="w"> </span><span class="o">------------------</span><span class="w"> </span><span class="o">------------</span><span class="w"> </span><span class="o">---------------</span><span class="w"> </span><span class="o">------------</span>
+<a id="__codelineno-5-55" name="__codelineno-5-55" href="#__codelineno-5-55"></a><span class="mi">24014</span><span class="w">  </span><span class="mi">16001</span><span class="w">       </span><span class="mf">1.1.1.1</span><span class="o">/</span><span class="mi">32</span><span class="w">         </span><span class="n">Gi0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="w">    </span><span class="mf">23.0.0.2</span><span class="w">        </span><span class="mi">240</span><span class="w">      </span><span class="c1">// (3)</span>
+<a id="__codelineno-5-56" name="__codelineno-5-56" href="#__codelineno-5-56"></a><span class="n">RP</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="n">RP0</span><span class="o">/</span><span class="n">CPU0</span><span class="p">:</span><span class="n">P3</span><span class="err">#</span>
+<a id="__codelineno-5-57" name="__codelineno-5-57" href="#__codelineno-5-57"></a>
+<a id="__codelineno-5-58" name="__codelineno-5-58" href="#__codelineno-5-58"></a><span class="n">RP</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="n">RP0</span><span class="o">/</span><span class="n">CPU0</span><span class="p">:</span><span class="n">P3</span><span class="err">#</span><span class="n">show</span><span class="w"> </span><span class="n">cef</span><span class="w"> </span><span class="n">mpls</span><span class="w"> </span><span class="n">local</span><span class="o">-</span><span class="n">label</span><span class="w"> </span><span class="mi">24014</span><span class="w"> </span><span class="n">eOS</span><span class="w"> </span><span class="n">detail</span>
+<a id="__codelineno-5-59" name="__codelineno-5-59" href="#__codelineno-5-59"></a><span class="n">Wed</span><span class="w"> </span><span class="n">Feb</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="mo">06</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mf">45.214</span><span class="w"> </span><span class="n">UTC</span>
+<a id="__codelineno-5-60" name="__codelineno-5-60" href="#__codelineno-5-60"></a><span class="n">Label</span><span class="o">/</span><span class="n">EOS</span><span class="w"> </span><span class="mi">24014</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">Label</span><span class="o">-</span><span class="n">type</span><span class="w"> </span><span class="n">Unknown</span><span class="p">,</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="mi">97</span><span class="p">,</span><span class="w"> </span><span class="n">labeled</span><span class="w"> </span><span class="n">SR</span><span class="p">,</span><span class="w"> </span><span class="n">internal</span><span class="w"> </span><span class="mh">0x1000001</span><span class="w"> </span><span class="mh">0x87f0</span><span class="w"> </span><span class="p">(</span><span class="n">ptr</span><span class="w"> </span><span class="mh">0xdb2f9c0</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="mh">0x600</span><span class="w"> </span><span class="p">(</span><span class="mh">0xd944f50</span><span class="p">),</span><span class="w"> </span><span class="mh">0xa28</span><span class="w"> </span><span class="p">(</span><span class="mh">0xeb604b8</span><span class="p">)</span>
+<a id="__codelineno-5-61" name="__codelineno-5-61" href="#__codelineno-5-61"></a><span class="w"> </span><span class="n">Updated</span><span class="w"> </span><span class="n">Feb</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="mo">06</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mf">12.318</span>
+<a id="__codelineno-5-62" name="__codelineno-5-62" href="#__codelineno-5-62"></a><span class="w"> </span><span class="n">remote</span><span class="w"> </span><span class="n">adjacency</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span>
+<a id="__codelineno-5-63" name="__codelineno-5-63" href="#__codelineno-5-63"></a><span class="w"> </span><span class="n">Prefix</span><span class="w"> </span><span class="n">Len</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w"> </span><span class="n">traffic</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">precedence</span><span class="w"> </span><span class="n">n</span><span class="o">/</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">priority</span><span class="w"> </span><span class="mi">15</span>
+<a id="__codelineno-5-64" name="__codelineno-5-64" href="#__codelineno-5-64"></a><span class="w"> </span><span class="n">Extensions</span><span class="p">:</span><span class="w"> </span><span class="n">context</span><span class="o">-</span><span class="n">label</span><span class="p">:</span><span class="mi">16001</span>
+<a id="__codelineno-5-65" name="__codelineno-5-65" href="#__codelineno-5-65"></a><span class="w">  </span><span class="n">gateway</span><span class="w"> </span><span class="nf">array</span><span class="w"> </span><span class="p">(</span><span class="mh">0xd7ad9c0</span><span class="p">)</span><span class="w"> </span><span class="n">reference</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">flags</span><span class="w"> </span><span class="mh">0x48</span><span class="p">,</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="nf">lsd</span><span class="w"> </span><span class="p">(</span><span class="mi">5</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">backups</span>
+<a id="__codelineno-5-66" name="__codelineno-5-66" href="#__codelineno-5-66"></a><span class="w">                </span><span class="o">[</span><span class="mi">2</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="n">flags</span><span class="w"> </span><span class="mh">0x8401</span><span class="w"> </span><span class="p">(</span><span class="mh">0xebae188</span><span class="p">)</span><span class="w"> </span><span class="n">ext</span><span class="w"> </span><span class="mh">0x0</span><span class="w"> </span><span class="p">(</span><span class="mh">0x0</span><span class="p">)</span><span class="o">]</span>
+<a id="__codelineno-5-67" name="__codelineno-5-67" href="#__codelineno-5-67"></a><span class="w">  </span><span class="n">LW</span><span class="o">-</span><span class="n">LDI</span><span class="o">[</span><span class="n">type</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="n">refc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">ptr</span><span class="o">=</span><span class="mh">0xd944f50</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="o">-</span><span class="n">ldi</span><span class="o">=</span><span class="mh">0xebae188</span><span class="o">]</span>
+<a id="__codelineno-5-68" name="__codelineno-5-68" href="#__codelineno-5-68"></a><span class="w">  </span><span class="n">gateway</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">update</span><span class="w"> </span><span class="n">type</span><span class="o">-</span><span class="n">time</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">Feb</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="mo">06</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mf">26.469</span>
+<a id="__codelineno-5-69" name="__codelineno-5-69" href="#__codelineno-5-69"></a><span class="w"> </span><span class="n">LDI</span><span class="w"> </span><span class="n">Update</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="n">Feb</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="mo">06</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="mf">11.115</span>
+<a id="__codelineno-5-70" name="__codelineno-5-70" href="#__codelineno-5-70"></a><span class="w"> </span><span class="n">LW</span><span class="o">-</span><span class="n">LDI</span><span class="o">-</span><span class="n">TS</span><span class="w"> </span><span class="n">Feb</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="mo">06</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mf">12.319</span>
+<a id="__codelineno-5-71" name="__codelineno-5-71" href="#__codelineno-5-71"></a><span class="w">   </span><span class="n">via</span><span class="w"> </span><span class="mf">23.0.0.2</span><span class="o">/</span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="w"> </span><span class="n">dependencies</span><span class="p">,</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="kd">class</span> <span class="err">0</span> <span class="err">[</span><span class="nc">flags</span><span class="w"> </span><span class="mh">0x0</span><span class="o">]</span>
+<a id="__codelineno-5-72" name="__codelineno-5-72" href="#__codelineno-5-72"></a><span class="w">    </span><span class="n">path</span><span class="o">-</span><span class="n">idx</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">NHID</span><span class="w"> </span><span class="mh">0x0</span><span class="w"> </span><span class="o">[</span><span class="mh">0xf399a10</span><span class="w"> </span><span class="mh">0x0</span><span class="o">]</span>
+<a id="__codelineno-5-73" name="__codelineno-5-73" href="#__codelineno-5-73"></a><span class="w">    </span><span class="n">next</span><span class="w"> </span><span class="n">hop</span><span class="w"> </span><span class="mf">23.0.0.2</span><span class="o">/</span><span class="mi">32</span>
+<a id="__codelineno-5-74" name="__codelineno-5-74" href="#__codelineno-5-74"></a><span class="w">    </span><span class="n">remote</span><span class="w"> </span><span class="n">adjacency</span>
+<a id="__codelineno-5-75" name="__codelineno-5-75" href="#__codelineno-5-75"></a><span class="w">     </span><span class="n">local</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="mi">24014</span><span class="w">      </span><span class="n">labels</span><span class="w"> </span><span class="n">imposed</span><span class="w"> </span><span class="p">{</span><span class="mi">16001</span><span class="p">}</span>
+<a id="__codelineno-5-76" name="__codelineno-5-76" href="#__codelineno-5-76"></a>
+<a id="__codelineno-5-77" name="__codelineno-5-77" href="#__codelineno-5-77"></a><span class="w">    </span><span class="n">Load</span><span class="w"> </span><span class="n">distribution</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">(</span><span class="n">refcount</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-5-78" name="__codelineno-5-78" href="#__codelineno-5-78"></a>
+<a id="__codelineno-5-79" name="__codelineno-5-79" href="#__codelineno-5-79"></a><span class="w">    </span><span class="n">Hash</span><span class="w">  </span><span class="n">OK</span><span class="w">  </span><span class="n">Interface</span><span class="w">                 </span><span class="n">Address</span>
+<a id="__codelineno-5-80" name="__codelineno-5-80" href="#__codelineno-5-80"></a><span class="w">    </span><span class="mi">0</span><span class="w">     </span><span class="n">Y</span><span class="w">   </span><span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="w">    </span><span class="n">remote</span>
+<a id="__codelineno-5-81" name="__codelineno-5-81" href="#__codelineno-5-81"></a><span class="n">RP</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="n">RP0</span><span class="o">/</span><span class="n">CPU0</span><span class="p">:</span><span class="n">P3</span><span class="err">#</span>
+</code></pre></div>
+<ol>
+<li>SR labeled path to PE1</li>
+<li>PE1 is in SR-only domain, so no LDP path</li>
+<li>P3 replicates the SR label to the Unlabelled LDP outgoing label in order to connect the LDP label switched path to the SR label switched path.</li>
+</ol>
+<p>However, traffic from PE1 to PE5 continues to drop because the SR domain lacks a label switched path to LDP routers and ISIS LSP cannot distribute LDP labels.</p>
+<p>SRMS (Segment Routing Mapping Server) is the answer to the problem in the SR to LDP direction.</p>
+<h2 id="stitch-sr-to-ldp-with-srms">Stitch SR to LDP (with SRMS)</h2>
+<p>SRMS (Segment Routing Mapping Server) is a control-plane-only function that broadcasts prefix-sid values for routers outside the SR domain.</p>
+<p>Unique Prefix-SIDs are defined in SRMS for non-SR routers, and ISIS is tasked with advertising those SIDs in the IGP domain, such that all SR routers have an SR label for the non-SR routers.</p>
+<p>In our topology, P6 would be SRMS.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There is no need to configure the SID for P4 and P8, because the P nodes in an MPLS VPN network are never destination nodes; they are always in transit. This configuration is merely for the sake of consistency and completeness.</p>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">P6 (SRMS)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">segment</span><span class="o">-</span><span class="n">routing</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w"> </span><span class="n">mapping</span><span class="o">-</span><span class="n">server</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="n">prefix</span><span class="o">-</span><span class="n">sid</span><span class="o">-</span><span class="n">map</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">   </span><span class="n">address</span><span class="o">-</span><span class="n">family</span><span class="w"> </span><span class="n">ipv4</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="mf">4.4.4.4</span><span class="o">/</span><span class="mi">32</span><span class="w"> </span><span class="mi">4</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="mf">5.5.5.5</span><span class="o">/</span><span class="mi">32</span><span class="w"> </span><span class="mi">5</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="mf">8.8.8.8</span><span class="o">/</span><span class="mi">32</span><span class="w"> </span><span class="mi">8</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="n">router</span><span class="w"> </span><span class="n">isis</span><span class="w"> </span><span class="n">IGP</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w"> </span><span class="n">address</span><span class="o">-</span><span class="n">family</span><span class="w"> </span><span class="n">ipv4</span><span class="w"> </span><span class="n">unicast</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">  </span><span class="n">segment</span><span class="o">-</span><span class="n">routing</span><span class="w"> </span><span class="n">prefix</span><span class="o">-</span><span class="n">sid</span><span class="o">-</span><span class="n">map</span><span class="w"> </span><span class="n">advertise</span><span class="o">-</span><span class="n">local</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<h3 id="verify_2">Verify</h3>
+<p>The prefix-sid mappings are announced in ISIS, and all SR routers in the topology utilise them to forward traffic to a specific non-SR destination.</p>
+<p>The CEF entry below shows that the border router swaps the SR label for the LDP label in order to switch traffic from the SR domain to the LDP domain.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">RP</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="n">RP0</span><span class="o">/</span><span class="n">CPU0</span><span class="p">:</span><span class="n">P3</span><span class="err">#</span><span class="n">show</span><span class="w"> </span><span class="n">cef</span><span class="w"> </span><span class="mf">5.5.5.5</span><span class="o">/</span><span class="mi">32</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">Wed</span><span class="w"> </span><span class="n">Feb</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">14.484</span><span class="w"> </span><span class="n">UTC</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="mf">5.5.5.5</span><span class="o">/</span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="mi">167</span><span class="p">,</span><span class="w"> </span><span class="n">labeled</span><span class="w"> </span><span class="n">SR</span><span class="p">,</span><span class="w"> </span><span class="n">internal</span><span class="w"> </span><span class="mh">0x1000001</span><span class="w"> </span><span class="mh">0x87f0</span><span class="w"> </span><span class="p">(</span><span class="n">ptr</span><span class="w"> </span><span class="mh">0xe6a5218</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="mh">0x600</span><span class="w"> </span><span class="p">(</span><span class="mh">0xd9447b8</span><span class="p">),</span><span class="w"> </span><span class="mh">0xa28</span><span class="w"> </span><span class="p">(</span><span class="mh">0xeb60788</span><span class="p">)</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w"> </span><span class="n">Updated</span><span class="w"> </span><span class="n">Feb</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">02.171</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w"> </span><span class="n">remote</span><span class="w"> </span><span class="n">adjacency</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">2</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w"> </span><span class="n">Prefix</span><span class="w"> </span><span class="n">Len</span><span class="w"> </span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="n">traffic</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">precedence</span><span class="w"> </span><span class="n">n</span><span class="o">/</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">priority</span><span class="w"> </span><span class="mi">15</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="n">gateway</span><span class="w"> </span><span class="nf">array</span><span class="w"> </span><span class="p">(</span><span class="mh">0xd7ac5d0</span><span class="p">)</span><span class="w"> </span><span class="n">reference</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">flags</span><span class="w"> </span><span class="mh">0x68</span><span class="p">,</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="nf">rib</span><span class="w"> </span><span class="p">(</span><span class="mi">7</span><span class="p">),</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">backups</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">                </span><span class="o">[</span><span class="mi">2</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="n">flags</span><span class="w"> </span><span class="mh">0x8401</span><span class="w"> </span><span class="p">(</span><span class="mh">0xebadbe8</span><span class="p">)</span><span class="w"> </span><span class="n">ext</span><span class="w"> </span><span class="mh">0x0</span><span class="w"> </span><span class="p">(</span><span class="mh">0x0</span><span class="p">)</span><span class="o">]</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">  </span><span class="n">LW</span><span class="o">-</span><span class="n">LDI</span><span class="o">[</span><span class="n">type</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="n">refc</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">ptr</span><span class="o">=</span><span class="mh">0xd9447b8</span><span class="p">,</span><span class="w"> </span><span class="n">sh</span><span class="o">-</span><span class="n">ldi</span><span class="o">=</span><span class="mh">0xebadbe8</span><span class="o">]</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">  </span><span class="n">gateway</span><span class="w"> </span><span class="n">array</span><span class="w"> </span><span class="n">update</span><span class="w"> </span><span class="n">type</span><span class="o">-</span><span class="n">time</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">Feb</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">02.171</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w"> </span><span class="n">LDI</span><span class="w"> </span><span class="n">Update</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="n">Feb</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">02.179</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w"> </span><span class="n">LW</span><span class="o">-</span><span class="n">LDI</span><span class="o">-</span><span class="n">TS</span><span class="w"> </span><span class="n">Feb</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">02.179</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">   </span><span class="n">via</span><span class="w"> </span><span class="mf">34.0.0.4</span><span class="o">/</span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="w"> </span><span class="n">dependencies</span><span class="p">,</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="kd">class</span> <span class="err">0</span> <span class="err">[</span><span class="nc">flags</span><span class="w"> </span><span class="mh">0x0</span><span class="o">]</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">    </span><span class="n">path</span><span class="o">-</span><span class="n">idx</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">NHID</span><span class="w"> </span><span class="mh">0x0</span><span class="w"> </span><span class="o">[</span><span class="mh">0xf3998d0</span><span class="w"> </span><span class="mh">0x0</span><span class="o">]</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="w">    </span><span class="n">next</span><span class="w"> </span><span class="n">hop</span><span class="w"> </span><span class="mf">34.0.0.4</span><span class="o">/</span><span class="mi">32</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="w">    </span><span class="n">remote</span><span class="w"> </span><span class="n">adjacency</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">     </span><span class="n">local</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="mi">16005</span><span class="w">      </span><span class="n">labels</span><span class="w"> </span><span class="n">imposed</span><span class="w"> </span><span class="p">{</span><span class="mi">24000</span><span class="p">}</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="w">    </span><span class="n">Load</span><span class="w"> </span><span class="n">distribution</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">(</span><span class="n">refcount</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="w">    </span><span class="n">Hash</span><span class="w">  </span><span class="n">OK</span><span class="w">  </span><span class="n">Interface</span><span class="w">                 </span><span class="n">Address</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="w">    </span><span class="mi">0</span><span class="w">     </span><span class="n">Y</span><span class="w">   </span><span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">2</span><span class="w">    </span><span class="n">remote</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="n">RP</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="n">RP0</span><span class="o">/</span><span class="n">CPU0</span><span class="p">:</span><span class="n">P3</span><span class="err">#</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">RP</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="n">RP0</span><span class="o">/</span><span class="n">CPU0</span><span class="p">:</span><span class="n">PE1</span><span class="err">#</span><span class="n">traceroute</span><span class="w"> </span><span class="n">sr</span><span class="o">-</span><span class="n">mpls</span><span class="w"> </span><span class="mf">5.5.5.5</span><span class="o">/</span><span class="mi">32</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">Wed</span><span class="w"> </span><span class="n">Feb</span><span class="w">  </span><span class="mi">1</span><span class="w"> </span><span class="mo">06</span><span class="p">:</span><span class="mi">22</span><span class="p">:</span><span class="mf">44.329</span><span class="w"> </span><span class="n">UTC</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">Tracing</span><span class="w"> </span><span class="n">MPLS</span><span class="w"> </span><span class="n">Label</span><span class="w"> </span><span class="n">Switched</span><span class="w"> </span><span class="n">Path</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="mf">5.5.5.5</span><span class="o">/</span><span class="mi">32</span><span class="p">,</span><span class="w"> </span><span class="n">timeout</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">seconds</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="nl">Codes</span><span class="p">:</span><span class="w"> </span><span class="sc">&#39;!&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">success</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;Q&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">sent</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;.&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">timeout</span><span class="p">,</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">  </span><span class="sc">&#39;L&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">labeled</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="kd">interface</span><span class="err">,</span> <span class="err">&#39;</span><span class="nc">B</span><span class="err">&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">unlabeled</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="kd">interface</span><span class="err">,</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>  <span class="err">&#39;</span><span class="nc">D</span><span class="err">&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">DS</span><span class="w"> </span><span class="n">Map</span><span class="w"> </span><span class="n">mismatch</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;F&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">FEC</span><span class="w"> </span><span class="n">mapping</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;f&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">FEC</span><span class="w"> </span><span class="n">mismatch</span><span class="p">,</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">  </span><span class="sc">&#39;M&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">malformed</span><span class="w"> </span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;m&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">unsupported</span><span class="w"> </span><span class="n">tlvs</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;N&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">rx</span><span class="w"> </span><span class="n">label</span><span class="p">,</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">  </span><span class="sc">&#39;P&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">rx</span><span class="w"> </span><span class="n">intf</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="n">prot</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;p&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">premature</span><span class="w"> </span><span class="n">termination</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">LSP</span><span class="p">,</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">  </span><span class="sc">&#39;R&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">transit</span><span class="w"> </span><span class="n">router</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;I&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">unknown</span><span class="w"> </span><span class="n">upstream</span><span class="w"> </span><span class="n">index</span><span class="p">,</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">  </span><span class="sc">&#39;X&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">unknown</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">code</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;x&#39;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="mi">0</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="n">Type</span><span class="w"> </span><span class="n">escape</span><span class="w"> </span><span class="n">sequence</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">abort</span><span class="p">.</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">  </span><span class="mi">0</span><span class="w"> </span><span class="mf">12.0.0.1</span><span class="w"> </span><span class="n">MRU</span><span class="w"> </span><span class="mi">1500</span><span class="w"> </span><span class="o">[</span><span class="n">Labels</span><span class="p">:</span><span class="w"> </span><span class="mi">16005</span><span class="w"> </span><span class="n">Exp</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="o">]</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="n">L</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mf">12.0.0.2</span><span class="w"> </span><span class="n">MRU</span><span class="w"> </span><span class="mi">1500</span><span class="w"> </span><span class="o">[</span><span class="n">Labels</span><span class="p">:</span><span class="w"> </span><span class="mi">16005</span><span class="w"> </span><span class="n">Exp</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="o">]</span><span class="w"> </span><span class="mi">13</span><span class="w"> </span><span class="n">ms</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="n">L</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mf">27.0.0.7</span><span class="w"> </span><span class="n">MRU</span><span class="w"> </span><span class="mi">1500</span><span class="w"> </span><span class="o">[</span><span class="n">Labels</span><span class="p">:</span><span class="w"> </span><span class="mi">24000</span><span class="w"> </span><span class="n">Exp</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="o">]</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">ms</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="n">L</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mf">47.0.0.4</span><span class="w"> </span><span class="n">MRU</span><span class="w"> </span><span class="mi">1500</span><span class="w"> </span><span class="o">[</span><span class="n">Labels</span><span class="p">:</span><span class="w"> </span><span class="n">implicit</span><span class="o">-</span><span class="kc">null</span><span class="w"> </span><span class="n">Exp</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="o">]</span><span class="w"> </span><span class="mi">21</span><span class="w"> </span><span class="n">ms</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="o">!</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mf">45.0.0.5</span><span class="w"> </span><span class="mi">13</span><span class="w"> </span><span class="n">ms</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="n">RP</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="n">RP0</span><span class="o">/</span><span class="n">CPU0</span><span class="p">:</span><span class="n">PE1</span><span class="err">#</span>
+</code></pre></div>
+<h2 id="sr-only-domain">SR-Only Domain</h2>
+<p>Configure SR on the topology's remaining routers.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">P4</label><label for="__tabbed_3_2">PE5</label><label for="__tabbed_3_3">P8</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">router</span><span class="w"> </span><span class="n">isis</span><span class="w"> </span><span class="n">IGP</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w"> </span><span class="n">address</span><span class="o">-</span><span class="n">family</span><span class="w"> </span><span class="n">ipv4</span><span class="w"> </span><span class="n">unicast</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="n">segment</span><span class="o">-</span><span class="n">routing</span><span class="w"> </span><span class="n">mpls</span><span class="w"> </span><span class="n">sr</span><span class="o">-</span><span class="n">prefer</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w"> </span><span class="o">!</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w"> </span><span class="kd">interface</span> <span class="nc">Loopback0</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span><span class="n">address</span><span class="o">-</span><span class="n">family</span><span class="w"> </span><span class="n">ipv4</span><span class="w"> </span><span class="n">unicast</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">   </span><span class="n">prefix</span><span class="o">-</span><span class="n">sid</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="mi">4</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">router</span><span class="w"> </span><span class="n">isis</span><span class="w"> </span><span class="n">IGP</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w"> </span><span class="n">address</span><span class="o">-</span><span class="n">family</span><span class="w"> </span><span class="n">ipv4</span><span class="w"> </span><span class="n">unicast</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="n">segment</span><span class="o">-</span><span class="n">routing</span><span class="w"> </span><span class="n">mpls</span><span class="w"> </span><span class="n">sr</span><span class="o">-</span><span class="n">prefer</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w"> </span><span class="o">!</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w"> </span><span class="kd">interface</span> <span class="nc">Loopback0</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">  </span><span class="n">address</span><span class="o">-</span><span class="n">family</span><span class="w"> </span><span class="n">ipv4</span><span class="w"> </span><span class="n">unicast</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">   </span><span class="n">prefix</span><span class="o">-</span><span class="n">sid</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="mi">5</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">router</span><span class="w"> </span><span class="n">isis</span><span class="w"> </span><span class="n">IGP</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w"> </span><span class="n">address</span><span class="o">-</span><span class="n">family</span><span class="w"> </span><span class="n">ipv4</span><span class="w"> </span><span class="n">unicast</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span><span class="n">segment</span><span class="o">-</span><span class="n">routing</span><span class="w"> </span><span class="n">mpls</span><span class="w"> </span><span class="n">sr</span><span class="o">-</span><span class="n">prefer</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w"> </span><span class="o">!</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w"> </span><span class="kd">interface</span> <span class="nc">Loopback0</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">  </span><span class="n">address</span><span class="o">-</span><span class="n">family</span><span class="w"> </span><span class="n">ipv4</span><span class="w"> </span><span class="n">unicast</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">   </span><span class="n">prefix</span><span class="o">-</span><span class="n">sid</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="mi">8</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Remove LDP from all of the topology's routers.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">All Routers</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">router</span><span class="w"> </span><span class="n">isis</span><span class="w"> </span><span class="n">IGP</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w"> </span><span class="n">address</span><span class="o">-</span><span class="n">family</span><span class="w"> </span><span class="n">ipv4</span><span class="w"> </span><span class="n">unicast</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="n">no</span><span class="w"> </span><span class="n">mpls</span><span class="w"> </span><span class="n">ldp</span><span class="w"> </span><span class="n">auto</span><span class="o">-</span><span class="n">config</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Remove SRMS as well.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">P6</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">router</span><span class="w"> </span><span class="n">isis</span><span class="w"> </span><span class="n">IGP</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w"> </span><span class="n">address</span><span class="o">-</span><span class="n">family</span><span class="w"> </span><span class="n">ipv4</span><span class="w"> </span><span class="n">unicast</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span><span class="n">no</span><span class="w"> </span><span class="n">segment</span><span class="o">-</span><span class="n">routing</span><span class="w"> </span><span class="n">prefix</span><span class="o">-</span><span class="n">sid</span><span class="o">-</span><span class="n">map</span><span class="w"> </span><span class="n">advertise</span><span class="o">-</span><span class="n">local</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w"> </span><span class="o">!</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="o">!</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="n">no</span><span class="w"> </span><span class="n">segment</span><span class="o">-</span><span class="n">routing</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../sr_intro/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Segment Routing" rel="prev">
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <div class="md-ellipsis">
+                <span class="md-footer__direction">
+                  Previous
+                </span>
+                Segment Routing
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../tilfa/" class="md-footer__link md-footer__link--next" aria-label="Next: TI-LFA" rel="next">
+            <div class="md-footer__title">
+              <div class="md-ellipsis">
+                <span class="md-footer__direction">
+                  Next
+                </span>
+                TI-LFA
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.code.annotate", "navigation.instant", "navigation.sections", "navigation.footer", "navigation.top", "toc.follow", "toc.integrate"], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.efa0ade1.min.js"></script>
+      
+    
+  </body>
+</html>
